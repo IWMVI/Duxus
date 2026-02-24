@@ -13,6 +13,9 @@ public class Time {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
+    @Column
+    private String nomeDoClube;
+
 	@Column
     private LocalDate data;
 	
@@ -22,8 +25,9 @@ public class Time {
 	public Time() {
 	}
 
-	public Time(LocalDate data, List<ComposicaoTime> composicaoTime) {
-		this.data = data;
+	public Time(String nomeDoClube, LocalDate data, List<ComposicaoTime> composicaoTime) {
+		this.nomeDoClube = nomeDoClube;
+        this.data = data;
 		this.composicaoTime = composicaoTime;
 	}
 
@@ -35,7 +39,15 @@ public class Time {
 		this.id = id;
 	}
 
-	public LocalDate getData() {
+    public String getNomeDoClube() {
+        return nomeDoClube;
+    }
+
+    public void setNomeDoClube(String nomeDoClube) {
+        this.nomeDoClube = nomeDoClube;
+    }
+
+    public LocalDate getData() {
 		return data;
 	}
 

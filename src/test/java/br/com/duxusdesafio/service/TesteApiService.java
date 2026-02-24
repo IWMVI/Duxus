@@ -20,6 +20,7 @@ import static org.junit.Assert.assertEquals;
 public class TesteApiService {
 
     private final static LocalDate data1993 = LocalDate.of(1993,1, 1);
+    private final static LocalDate data1994 = LocalDate.of(1994,1, 1);
     private final static LocalDate data1995 = LocalDate.of(1995,1, 1);
 
     @Spy
@@ -157,7 +158,7 @@ public class TesteApiService {
     }
 
     @DataProvider
-    public static Object[][] testFranquiaMaisFamosaParams() {
+    public static Object[][] testClubeMaisFamosoParams() {
         DadosParaTesteApiService dadosParaTesteApiService = new DadosParaTesteApiService();
         List<Time> todosOsTimes = dadosParaTesteApiService.getTodosOsTimes();
 
@@ -166,44 +167,54 @@ public class TesteApiService {
                         data1993,
                         data1995,
                         todosOsTimes,
-                        dadosParaTesteApiService.getFranquiaNBA()
+                        dadosParaTesteApiService.getClubeChicagoBulls()
                 }
         };
     }
 
     @Test
-    @UseDataProvider("testFranquiaMaisFamosaParams")
-    public void testFranquiaMaisFamosa(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes, String esperado) {
+    @UseDataProvider("testClubeMaisFamosoParams")
+    public void testClubeMaisFamoso(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes, String esperado) {
 
-        String franquiaMaisFamosa = apiService.franquiaMaisFamosa(dataInicial, dataFinal, todosOsTimes);
-        assertEquals(esperado, franquiaMaisFamosa);
+        String clubeMaisFamoso = apiService.clubeMaisFamoso(dataInicial, dataFinal, todosOsTimes);
+        assertEquals(esperado, clubeMaisFamoso);
     }
 
     @DataProvider
-    public static Object[][] testContagemPorFranquiaParams() {
+    public static Object[][] testContagemDeClubesParams() {
 
         DadosParaTesteApiService dadosParaTesteApiService = new DadosParaTesteApiService();
         List<Time> todosOsTimes = dadosParaTesteApiService.getTodosOsTimes();
 
-        Map<String, Long> esperado = new HashMap<>();
-        esperado.put(dadosParaTesteApiService.getFranquiaNBA(), 2L);
+        Map<String, Long> esperado1 = new HashMap<>();
+        esperado1.put(dadosParaTesteApiService.getClubeDetroitPistons(), 1L);
+        esperado1.put(dadosParaTesteApiService.getClubeChicagoBulls(), 2L);
+
+        Map<String, Long> esperado2 = new HashMap<>();
+        esperado2.put(dadosParaTesteApiService.getClubeChicagoBulls(), 2L);
 
         return new Object[][]{
                 {
                         data1993,
                         data1995,
                         todosOsTimes,
-                        esperado
+                        esperado1
+                },
+                {
+                        data1994,
+                        data1995,
+                        todosOsTimes,
+                        esperado2
                 }
         };
     }
 
     @Test
-    @UseDataProvider("testContagemPorFranquiaParams")
-    public void testContagemPorFranquia(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes, Map<String, Long> esperado) {
+    @UseDataProvider("testContagemDeClubesParams")
+    public void testcontagemDeClubesNoPeriodo(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes, Map<String, Long> esperado) {
 
-        Map<String, Long> contagemPorFranquia = apiService.contagemPorFranquia(dataInicial, dataFinal, todosOsTimes);
-        assertEquals(esperado, contagemPorFranquia);
+        Map<String, Long> contagemDeClubesNoPeriodo = apiService.contagemDeClubesNoPeriodo(dataInicial, dataFinal, todosOsTimes);
+        assertEquals(esperado, contagemDeClubesNoPeriodo);
     }
 
 
