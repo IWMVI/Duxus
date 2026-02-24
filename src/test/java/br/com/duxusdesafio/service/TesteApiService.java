@@ -158,7 +158,7 @@ public class TesteApiService {
     }
 
     @DataProvider
-    public static Object[][] testClubeMaisFamosoParams() {
+    public static Object[][] testClubeMaisRecorrenteParams() {
         DadosParaTesteApiService dadosParaTesteApiService = new DadosParaTesteApiService();
         List<Time> todosOsTimes = dadosParaTesteApiService.getTodosOsTimes();
 
@@ -173,11 +173,11 @@ public class TesteApiService {
     }
 
     @Test
-    @UseDataProvider("testClubeMaisFamosoParams")
-    public void testClubeMaisFamoso(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes, String esperado) {
+    @UseDataProvider("testClubeMaisRecorrenteParams")
+    public void testClubeMaisRecorrente(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes, String esperado) {
 
-        String clubeMaisFamoso = apiService.clubeMaisFamoso(dataInicial, dataFinal, todosOsTimes);
-        assertEquals(esperado, clubeMaisFamoso);
+        String clubeMaisRecorrente = apiService.clubeMaisRecorrente(dataInicial, dataFinal, todosOsTimes);
+        assertEquals(esperado, clubeMaisRecorrente);
     }
 
     @DataProvider

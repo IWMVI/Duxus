@@ -57,7 +57,7 @@ public class ApiService {
     /**
      * Vai retornar o nome do Clube mais comum dentro do período
      */
-    public String clubeMaisFamoso(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes) {
+    public String clubeMaisRecorrente(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes) {
         // TODO Implementar método seguindo as instruções!
         return null;
     }

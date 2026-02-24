@@ -69,18 +69,19 @@ public class Time {
 		if (this == o) return true;
 		if (!(o instanceof Time)) return false;
 		Time time = (Time) o;
-		return id == time.id && Objects.equals(data, time.data);
+		return id == time.id && Objects.equals(nomeDoClube, time.nomeDoClube) && Objects.equals(data, time.data);
 	}
 
 	@Override
 	public final int hashCode() {
-		return Objects.hash(id, data);
+		return Objects.hash(id, nomeDoClube, data);
 	}
 
 	@Override
 	public String toString() {
 		return "Time{" +
 				"id=" + id +
+                ", nome=" + nomeDoClube +
 				", data=" + data +
 				'}';
 	}
