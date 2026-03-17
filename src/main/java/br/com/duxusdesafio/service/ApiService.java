@@ -47,9 +47,9 @@ public class ApiService {
     }
 
     /**
-     * Vai retornar a função mais comum nos times dentro do período
+     * Vai retornar a função mais recorrente nos times dentro do período
      */
-    public String funcaoMaisComum(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes){
+    public String funcaoMaisRecorrente(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes){
         // TODO Implementar método seguindo as instruções!
         return null;
     }

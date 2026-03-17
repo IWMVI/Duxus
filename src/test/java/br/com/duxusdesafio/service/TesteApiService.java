@@ -26,7 +26,6 @@ public class TesteApiService {
     @Spy
     private ApiService apiService;
 
-
     @Before
     public void init() {
         MockitoAnnotations.openMocks(this);
@@ -133,7 +132,7 @@ public class TesteApiService {
 
 
     @DataProvider
-    public static Object[][] testFuncaoMaisComumParams() {
+    public static Object[][] testFuncaoMaisRecorrenteParams() {
 
         DadosParaTesteApiService dadosParaTesteApiService = new DadosParaTesteApiService();
         List<Time> todosOsTimes = dadosParaTesteApiService.getTodosOsTimes();
@@ -149,12 +148,12 @@ public class TesteApiService {
     }
 
     @Test
-    @UseDataProvider("testFuncaoMaisComumParams")
-    public void testFuncaoMaisComum(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes, String esperado) {
+    @UseDataProvider("testFuncaoMaisRecorrenteParams")
+    public void testFuncaoMaisRecorrente(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes, String esperado) {
 
-        String funcaoMaisComum = apiService.funcaoMaisComum(dataInicial, dataFinal, todosOsTimes);
+        String funcaoMaisRecorrente = apiService.funcaoMaisRecorrente(dataInicial, dataFinal, todosOsTimes);
 
-        assertEquals(esperado, funcaoMaisComum);
+        assertEquals(esperado, funcaoMaisRecorrente);
     }
 
     @DataProvider
