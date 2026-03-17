@@ -97,7 +97,7 @@ public class TesteApiService {
 
 
     @DataProvider
-    public static Object[][] testTimeMaisComumParams() {
+    public static Object[][] testTimeMaisRecorrenteParams() {
         DadosParaTesteApiService dadosParaTesteApiService = new DadosParaTesteApiService();
         List<Time> todosOsTimes = dadosParaTesteApiService.getTodosOsTimes();
 
@@ -117,16 +117,16 @@ public class TesteApiService {
     }
 
     @Test
-    @UseDataProvider("testTimeMaisComumParams")
-    public void testIntegrantesDoTimeMaisComum(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes, List<String> esperado) {
+    @UseDataProvider("testTimeMaisRecorrenteParams")
+    public void testIntegrantesDoTimeMaisRecorrente(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes, List<String> esperado) {
 
-        List<String> nomeDosIntegrantesDoTimeMaisComum = apiService.integrantesDoTimeMaisComum(dataInicial, dataFinal, todosOsTimes);
+        List<String> nomeDosIntegrantesDoTimeMaisRecorrente = apiService.integrantesDoTimeMaisRecorrente(dataInicial, dataFinal, todosOsTimes);
 
-        if(nomeDosIntegrantesDoTimeMaisComum != null){
-            nomeDosIntegrantesDoTimeMaisComum.sort(Comparator.naturalOrder());
+        if(nomeDosIntegrantesDoTimeMaisRecorrente != null){
+            nomeDosIntegrantesDoTimeMaisRecorrente.sort(Comparator.naturalOrder());
         }
 
-        assertEquals(esperado, nomeDosIntegrantesDoTimeMaisComum);
+        assertEquals(esperado, nomeDosIntegrantesDoTimeMaisRecorrente);
     }
 
 

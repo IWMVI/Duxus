@@ -38,10 +38,10 @@ public class ApiService {
     }
 
     /**
-     * Vai retornar uma lista com os nomes dos integrantes do time mais comum
-     * dentro do período
+     * Vai retornar uma lista com os nomes dos integrantes do time mais recorrente dentro do período.
+     * OBS: Considerar Time: clube + composição
      */
-    public List<String> integrantesDoTimeMaisComum(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes){
+    public List<String> integrantesDoTimeMaisRecorrente(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes){
         // TODO Implementar método seguindo as instruções!
         return null;
     }
