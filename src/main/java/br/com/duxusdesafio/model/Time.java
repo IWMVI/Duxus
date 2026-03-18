@@ -13,12 +13,26 @@ public class Time {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
+    /**
+     * Nome do Clube (associação esportiva)
+     * a qual o time representa.
+     * Exemplos:
+     * Para Futebol - Palmeiras, Santos, etc;
+     * Para Basquete - Pinheiros, Franca, etc.
+     */
     @Column
     private String nomeDoClube;
 
+    /**
+     * Data em que esse time foi formado (composição do time firmada)
+     * Lembrando: a formação da equipe pode mudar em momentos diferentes, por isso a data.
+     */
 	@Column
     private LocalDate data;
-	
+
+    /**
+     * Elenco ou equipe - o conjunto de integrantes desse time
+     */
 	@OneToMany(mappedBy = "time", cascade = CascadeType.ALL)
 	private List<ComposicaoTime> composicaoTime;
 
