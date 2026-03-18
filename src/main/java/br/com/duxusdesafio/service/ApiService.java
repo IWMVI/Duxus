@@ -39,7 +39,7 @@ public class ApiService {
 
     /**
      * Vai retornar uma lista com os nomes dos integrantes do time mais recorrente dentro do período.
-     * OBS: Considerar Time: clube + composição
+     * OBS: Time é o clube + composição em determinada data
      */
     public List<String> integrantesDoTimeMaisRecorrente(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes){
         // TODO Implementar método seguindo as instruções!
