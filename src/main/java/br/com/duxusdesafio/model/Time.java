@@ -1,6 +1,8 @@
 package br.com.duxusdesafio.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
@@ -20,15 +22,17 @@ public class Time {
      * Para Futebol - Palmeiras, Santos, etc;
      * Para Basquete - Pinheiros, Franca, etc.
      */
-    @Column
+    @NotBlank
+    @Column(nullable = false)
     private String nomeDoClube;
 
     /**
      * Data em que esse time foi formado (composição do time firmada)
      * Lembrando: a formação da equipe pode mudar em momentos diferentes, por isso a data.
      */
-	@Column
-    private LocalDate data;
+	@NotNull
+	@Column(nullable = false, unique = true)
+	private LocalDate data;
 
     /**
      * Elenco ou equipe - o conjunto de integrantes desse time

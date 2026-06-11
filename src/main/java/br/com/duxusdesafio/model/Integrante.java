@@ -1,7 +1,7 @@
 package br.com.duxusdesafio.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,12 +13,12 @@ public class Integrante {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	@NotNull
-	@Column
+	@NotBlank
+	@Column(nullable = false)
 	private String nome;
 	
-	@NotNull
-	@Column
+	@NotBlank
+	@Column(nullable = false)
 	private String funcao;
 	
 	@OneToMany(mappedBy = "integrante")
