@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta content="#101b17" name="theme-color">
+    <title>Escala | Gestão de equipes</title>
+    <link href="/styles.css?v=20260611-5" rel="stylesheet">
+</head>
+<body>
+<div class="aplicacao">
+    <aside class="barra-lateral" id="barra-lateral">
+        <div class="marca">
+            <span class="marca-icone">E</span>
+            <div>
+                <strong>Escala</strong>
+                <small>Gestão de equipes</small>
+            </div>
+        </div>
+
+        <nav aria-label="Menu principal">
+            <p class="rotulo-menu">Menu</p>
+            <button class="item-menu ativo" data-tela="inicio" type="button">
+                <span aria-hidden="true" class="icone-menu icone-inicio"></span>
+                <span>Visão geral</span>
+            </button>
+            <button class="item-menu" data-tela="integrantes" type="button">
+                <span aria-hidden="true" class="icone-menu icone-pessoas"></span>
+                <span>Integrantes</span>
+                <span class="selo-menu" id="selo-integrantes">0</span>
+            </button>
+            <button class="item-menu" data-tela="times" type="button">
+                <span aria-hidden="true" class="icone-menu icone-times"></span>
+                <span>Times</span>
+                <span class="selo-menu" id="selo-times">0</span>
+            </button>
+            <button class="item-menu" data-tela="analises" type="button">
+                <span aria-hidden="true" class="icone-menu icone-analises"></span>
+                <span>Análises</span>
+            </button>
+        </nav>
+
+        <div class="ajuda-lateral">
+            <span aria-hidden="true">?</span>
+            <div>
+                <strong>Como começar?</strong>
+                <small>Cadastre integrantes e monte o primeiro time.</small>
+            </div>
+        </div>
+    </aside>
+
+    <div class="conteudo-aplicacao">
+        <header class="barra-superior">
+            <button aria-label="Abrir menu" class="botao-menu-mobile" id="abrir-menu" type="button">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="titulo-atual">
+                <small id="caminho-atual">Escala</small>
+                <strong id="titulo-atual">Visão geral</strong>
+            </div>
+            <div class="acoes-superiores">
+                <button class="botao botao-neutro" data-abrir-modal="modal-integrante" type="button">
+                    <span class="mais">+</span> Integrante
+                </button>
+                <button class="botao botao-primario" data-abrir-modal="modal-time" type="button">
+                    <span class="mais">+</span> Novo time
+                </button>
+            </div>
+        </header>
+
+        <main>
+            <section class="tela ativa" data-painel="inicio">
+                <div class="boas-vindas">
+                    <div>
+                        <p class="marcador">Painel de gestão</p>
+                        <h1>Tenha clareza sobre cada escalação.</h1>
+                        <p>Cadastre sua equipe, organize os times e transforme o histórico em informações úteis.</p>
+                    </div>
+                    <button class="botao botao-claro" data-abrir-modal="modal-time" type="button">
+                        Montar novo time <span aria-hidden="true">→</span>
+                    </button>
+                </div>
+
+                <div class="grade-indicadores">
+                    <article class="indicador">
+                        <div class="indicador-icone verde"><span class="icone-pessoas"></span></div>
+                        <div>
+                            <small>Integrantes cadastrados</small>
+                            <strong id="total-integrantes">0</strong>
+                            <button data-ir-para="integrantes" type="button">Ver integrantes</button>
+                        </div>
+                    </article>
+                    <article class="indicador">
+                        <div class="indicador-icone azul"><span class="icone-times"></span></div>
+                        <div>
+                            <small>Times montados</small>
+                            <strong id="total-times">0</strong>
+                            <button data-ir-para="times" type="button">Ver times</button>
+                        </div>
+                    </article>
+                    <article class="indicador">
+                        <div class="indicador-icone laranja"><span class="icone-clubes"></span></div>
+                        <div>
+                            <small>Clubes registrados</small>
+                            <strong id="total-clubes">0</strong>
+                            <button data-ir-para="analises" type="button">Analisar dados</button>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="grade-inicio">
+                    <article class="painel">
+                        <div class="cabecalho-painel">
+                            <div>
+                                <p class="marcador">Atividade recente</p>
+                                <h2>Últimos times montados</h2>
+                            </div>
+                            <button class="link-acao" data-ir-para="times" type="button">Ver todos</button>
+                        </div>
+                        <div class="lista-recente" id="times-recentes"></div>
+                    </article>
+
+                    <article class="painel primeiros-passos">
+                        <div class="cabecalho-painel">
+                            <div>
+                                <p class="marcador">Fluxo recomendado</p>
+                                <h2>Primeiros passos</h2>
+                            </div>
+                        </div>
+                        <button data-abrir-modal="modal-integrante" type="button">
+                            <span>1</span>
+                            <div><strong>Cadastre integrantes</strong><small>Informe nome e função.</small></div>
+                            <b>→</b>
+                        </button>
+                        <button data-abrir-modal="modal-time" type="button">
+                            <span>2</span>
+                            <div><strong>Monte um time</strong><small>Escolha clube, data e formação.</small></div>
+                            <b>→</b>
+                        </button>
+                        <button data-ir-para="analises" type="button">
+                            <span>3</span>
+                            <div><strong>Analise os resultados</strong><small>Consulte padrões do histórico.</small>
+                            </div>
+                            <b>→</b>
+                        </button>
+                    </article>
+                </div>
+            </section>
+
+            <section class="tela" data-painel="integrantes">
+                <div class="cabecalho-tela">
+                    <div>
+                        <p class="marcador">Pessoas</p>
+                        <h1>Integrantes</h1>
+                        <p>Gerencie as pessoas disponíveis para formar os times.</p>
+                    </div>
+                    <button class="botao botao-primario" data-abrir-modal="modal-integrante" type="button">
+                        <span class="mais">+</span> Cadastrar integrante
+                    </button>
+                </div>
+                <div class="barra-ferramentas">
+                    <label class="campo-busca">
+                        <span aria-hidden="true"></span>
+                        <input id="busca-integrantes" placeholder="Buscar por nome ou função" type="search">
+                    </label>
+                    <span class="quantidade-lista" id="quantidade-integrantes">0 integrantes</span>
+                </div>
+                <div class="grade-integrantes" id="lista-integrantes"></div>
+            </section>
+
+            <section class="tela" data-painel="times">
+                <div class="cabecalho-tela">
+                    <div>
+                        <p class="marcador">Escalações</p>
+                        <h1>Times</h1>
+                        <p>Consulte todas as formações registradas por clube e data.</p>
+                    </div>
+                    <button class="botao botao-primario" data-abrir-modal="modal-time" type="button">
+                        <span class="mais">+</span> Montar time
+                    </button>
+                </div>
+                <div class="barra-ferramentas">
+                    <label class="campo-busca">
+                        <span aria-hidden="true"></span>
+                        <input id="busca-times" placeholder="Buscar por clube ou integrante" type="search">
+                    </label>
+                    <span class="quantidade-lista" id="quantidade-times">0 times</span>
+                </div>
+                <div class="grade-times" id="lista-times"></div>
+            </section>
+
+            <section class="tela" data-painel="analises">
+                <div class="cabecalho-tela">
+                    <div>
+                        <p class="marcador">Dados</p>
+                        <h1>Central de análises</h1>
+                        <p>Explore os principais padrões encontrados nas escalações.</p>
+                    </div>
+                </div>
+
+                <div class="area-analises">
+                    <aside class="consultas">
+                        <p class="rotulo-menu">Escolha uma análise</p>
+                        <button class="consulta ativa" data-consulta="integrante-mais-usado" type="button">
+                            <span>01</span>
+                            <div><strong>Integrante mais escalado</strong><small>Maior presença nos times</small></div>
+                        </button>
+                        <button class="consulta" data-consulta="integrantes-do-time-mais-recorrente" type="button">
+                            <span>02</span>
+                            <div><strong>Formação recorrente</strong><small>Integrantes mais repetidos</small></div>
+                        </button>
+                        <button class="consulta" data-consulta="funcao-mais-recorrente" type="button">
+                            <span>03</span>
+                            <div><strong>Função recorrente</strong><small>Função mais frequente</small></div>
+                        </button>
+                        <button class="consulta" data-consulta="clube-mais-recorrente" type="button">
+                            <span>04</span>
+                            <div><strong>Clube recorrente</strong><small>Clube com mais times</small></div>
+                        </button>
+                        <button class="consulta" data-consulta="contagem-de-clubes" type="button">
+                            <span>05</span>
+                            <div><strong>Participações por clube</strong><small>Distribuição das formações</small></div>
+                        </button>
+                        <button class="consulta" data-consulta="contagem-por-funcao" type="button">
+                            <span>06</span>
+                            <div><strong>Integrantes por função</strong><small>Distribuição das funções</small></div>
+                        </button>
+                        <button class="consulta" data-consulta="time-da-data" type="button">
+                            <span>07</span>
+                            <div><strong>Time por data</strong><small>Formação de um dia específico</small></div>
+                        </button>
+                    </aside>
+
+                    <article class="painel painel-consulta">
+                        <div class="cabecalho-consulta">
+                            <div>
+                                <p class="marcador">Consulta selecionada</p>
+                                <h2 id="nome-consulta">Integrante mais escalado</h2>
+                            </div>
+                            <div class="filtros-periodo" id="filtros-periodo">
+                                <label>De <span class="campo-data">
+                                    <input id="data-inicial" inputmode="numeric" maxlength="10" placeholder="dd/mm/aaaa"
+                                           type="text">
+                                    <button aria-label="Abrir calendário da data inicial"
+                                            data-abrir-calendario="data-inicial-calendario" type="button"></button>
+                                    <input class="seletor-data" data-campo-data="data-inicial"
+                                           id="data-inicial-calendario" tabindex="-1" type="date">
+                                </span></label>
+                                <label>Até <span class="campo-data">
+                                    <input id="data-final" inputmode="numeric" maxlength="10" placeholder="dd/mm/aaaa"
+                                           type="text">
+                                    <button aria-label="Abrir calendário da data final"
+                                            data-abrir-calendario="data-final-calendario" type="button"></button>
+                                    <input class="seletor-data" data-campo-data="data-final" id="data-final-calendario"
+                                           tabindex="-1" type="date">
+                                </span></label>
+                            </div>
+                            <div class="filtro-data-unica" hidden id="filtro-data-unica">
+                                <label>Data <span class="campo-data">
+                                    <input id="data-consulta" inputmode="numeric" maxlength="10"
+                                           placeholder="dd/mm/aaaa" type="text">
+                                    <button aria-label="Abrir calendário da consulta"
+                                            data-abrir-calendario="data-consulta-calendario" type="button"></button>
+                                    <input class="seletor-data" data-campo-data="data-consulta"
+                                           id="data-consulta-calendario" tabindex="-1" type="date">
+                                </span></label>
+                            </div>
+                        </div>
+                        <button class="botao botao-primario botao-analisar" id="executar-analise" type="button">Executar
+                            análise
+                        </button>
+                        <div class="resultado-analise" id="resultado">
+                            <div class="estado-consulta">
+                                <span>↗</span>
+                                <h3>Pronto para analisar</h3>
+                                <p>Defina o período ou consulte todo o histórico.</p>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+        </main>
+    </div>
+</div>
+
+<div class="fundo-menu" id="fundo-menu"></div>
+
+<dialog class="modal" id="modal-integrante">
+    <form id="form-integrante" novalidate>
+        <div class="cabecalho-modal">
+            <div><p class="marcador">Novo cadastro</p>
+                <h2>Cadastrar integrante</h2></div>
+            <button aria-label="Fechar" class="fechar-modal" data-fechar-modal type="button">×</button>
+        </div>
+        <p class="descricao-modal">Adicione uma pessoa à lista disponível para escalação.</p>
+        <label for="nome">Nome completo</label>
+        <input autocomplete="name" id="nome" maxlength="120" placeholder="Ex.: Marta Silva" required>
+        <label for="funcao">Função</label>
+        <input id="funcao" maxlength="120" placeholder="Ex.: Atacante" required>
+        <div class="acoes-modal">
+            <button class="botao botao-neutro" data-fechar-modal type="button">Cancelar</button>
+            <button class="botao botao-primario" type="submit"><span>Cadastrar integrante</span></button>
+        </div>
+    </form>
+</dialog>
+
+<dialog class="modal modal-amplo" id="modal-time">
+    <form id="form-time" novalidate>
+        <div class="cabecalho-modal">
+            <div><p class="marcador">Nova escalação</p>
+                <h2>Montar time</h2></div>
+            <button aria-label="Fechar" class="fechar-modal" data-fechar-modal type="button">×</button>
+        </div>
+        <p class="descricao-modal">Informe os dados da formação e selecione os integrantes.</p>
+        <div class="duas-colunas">
+            <div><label for="clube">Nome do clube</label><input id="clube" maxlength="120"
+                                                                placeholder="Ex.: Estrelas FC" required></div>
+            <div><label for="data">Data da escalação</label><span class="campo-data grande">
+                <input id="data" inputmode="numeric" maxlength="10" placeholder="dd/mm/aaaa" required type="text">
+                <button aria-label="Abrir calendário da escalação" data-abrir-calendario="data-calendario"
+                        type="button"></button>
+                <input class="seletor-data" data-campo-data="data" id="data-calendario" tabindex="-1" type="date">
+            </span></div>
+        </div>
+        <fieldset>
+            <legend>Integrantes da formação</legend>
+            <div class="selecao-integrantes" id="opcoes-integrantes"></div>
+        </fieldset>
+        <div class="acoes-modal">
+            <button class="botao botao-neutro" data-fechar-modal type="button">Cancelar</button>
+            <button class="botao botao-primario" type="submit"><span>Montar time</span></button>
+        </div>
+    </form>
+</dialog>
+
+<div aria-live="polite" class="notificacao" id="mensagem" role="status">
+    <span class="notificacao-icone"></span>
+    <span id="texto-mensagem"></span>
+    <button aria-label="Fechar mensagem" id="fechar-mensagem" type="button">×</button>
+</div>
+
+<script src="/index.js?v=20260611-4"></script>
+</body>
+</html>
