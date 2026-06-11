@@ -13,10 +13,12 @@ public class ComposicaoTime {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
-	@ManyToOne
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "time_id", nullable = false)
 	private Time time;
 
-	@ManyToOne
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "integrante_id", nullable = false)
 	private Integrante integrante;
 
 	public ComposicaoTime() {
