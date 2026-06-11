@@ -1,0 +1,59 @@
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: Express
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD:-Duxus@Sql2026}
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - >-
+          SQLCMD=/opt/mssql-tools18/bin/sqlcmd;
+          [ -x "$$SQLCMD" ] || SQLCMD=/opt/mssql-tools/bin/sqlcmd;
+          "$$SQLCMD" -C -S localhost -U sa -P "$$MSSQL_SA_PASSWORD"
+          -Q "SELECT 1" -b -o /dev/null
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 20s
+    restart: unless-stopped
+
+  sqlserver-init:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    environment:
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD:-Duxus@Sql2026}
+    entrypoint:
+      - /bin/bash
+      - -c
+      - |
+        SQLCMD=/opt/mssql-tools18/bin/sqlcmd
+        [ -x "$$SQLCMD" ] || SQLCMD=/opt/mssql-tools/bin/sqlcmd
+        "$$SQLCMD" -C -S sqlserver -U sa -P "$$MSSQL_SA_PASSWORD" \
+          -Q "IF DB_ID(N'duxus') IS NULL CREATE DATABASE [duxus]" -b
+    restart: "no"
+
+  app:
+    build:
+      context: .
+    depends_on:
+      sqlserver-init:
+        condition: service_completed_successfully
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:sqlserver://sqlserver:1433;databaseName=duxus;encrypt=true;trustServerCertificate=true
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.microsoft.sqlserver.jdbc.SQLServerDriver
+      SPRING_DATASOURCE_USERNAME: sa
+      SPRING_DATASOURCE_PASSWORD: ${MSSQL_SA_PASSWORD:-Duxus@Sql2026}
+      SPRING_H2_CONSOLE_ENABLED: "false"
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    ports:
+      - "${APP_PORT:-8080}:8080"
+    restart: unless-stopped
+
+volumes:
+  sqlserver-data:
