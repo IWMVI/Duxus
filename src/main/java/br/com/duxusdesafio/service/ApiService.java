@@ -5,9 +5,17 @@ import br.com.duxusdesafio.model.Time;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Service que possuirá as regras de negócio para o processamento dos dados
@@ -126,7 +134,7 @@ public class ApiService {
                 ));
     }
 
-    private java.util.stream.Stream<Time> timesNoPeriodo(
+    private Stream<Time> timesNoPeriodo(
             LocalDate dataInicial,
             LocalDate dataFinal,
             List<Time> todosOsTimes
@@ -137,14 +145,14 @@ public class ApiService {
                 .filter(time -> estaNoPeriodo(time.getData(), dataInicial, dataFinal));
     }
 
-    private java.util.stream.Stream<Time> timesValidos(List<Time> todosOsTimes) {
+    private Stream<Time> timesValidos(List<Time> todosOsTimes) {
         return Optional.ofNullable(todosOsTimes)
                 .orElseGet(Collections::emptyList)
                 .stream()
                 .filter(Objects::nonNull);
     }
 
-    private java.util.stream.Stream<Integrante> integrantesNoPeriodo(
+    private Stream<Integrante> integrantesNoPeriodo(
             LocalDate dataInicial,
             LocalDate dataFinal,
             List<Time> todosOsTimes
@@ -153,7 +161,7 @@ public class ApiService {
                 .flatMap(this::integrantesDoTime);
     }
 
-    private java.util.stream.Stream<Integrante> integrantesDoTime(Time time) {
+    private Stream<Integrante> integrantesDoTime(Time time) {
         return Optional.ofNullable(time.getComposicaoTime())
                 .orElseGet(Collections::emptyList)
                 .stream()
@@ -183,7 +191,9 @@ public class ApiService {
                 .stream()
                 .reduce((a, b) -> {
                     int cmp = a.getValue().compareTo(b.getValue());
-                    if (cmp != 0) return cmp > 0 ? a : b;
+                    if (cmp != 0) {
+                        return cmp > 0 ? a : b;
+                    }
                     return a.getKey().toString().compareTo(b.getKey().toString()) <= 0 ? a : b;
                 })
                 .map(Map.Entry::getKey)

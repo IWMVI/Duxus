@@ -9,11 +9,16 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/processamento")
@@ -34,7 +39,7 @@ public class ProcessamentoController {
             @Parameter(description = "Data da escalação", example = "2026-06-11", required = true)
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate data
     ) {
-        return ResponseEntity.of(java.util.Optional.ofNullable(processamentoService.timeDaData(data)));
+        return ResponseEntity.of(Optional.ofNullable(processamentoService.timeDaData(data)));
     }
 
     @GetMapping("/integrante-mais-usado")
@@ -45,7 +50,7 @@ public class ProcessamentoController {
             @Parameter(description = "Fim inclusivo do período", example = "2026-12-31")
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFinal
     ) {
-        return ResponseEntity.of(java.util.Optional.ofNullable(
+        return ResponseEntity.of(Optional.ofNullable(
                 processamentoService.integranteMaisUsado(dataInicial, dataFinal)
         ));
     }
@@ -106,7 +111,7 @@ public class ProcessamentoController {
     }
 
     private Map<String, String> respostaUnica(String chave, String valor) {
-        Map<String, String> resposta = new java.util.LinkedHashMap<>();
+        Map<String, String> resposta = new LinkedHashMap<>();
         resposta.put(chave, valor);
         return resposta;
     }

@@ -16,7 +16,12 @@ public class TimeEntrada {
     @NotBlank(message = "O nome do clube deve ser informado.")
     private String nomeDoClube;
 
-    @Schema(description = "Data da escalação no padrão ISO", example = "2026-06-11", type = "string", format = "date")
+    @Schema(
+            description = "Data da escalação no padrão ISO",
+            example = "2026-06-11",
+            type = "string",
+            format = "date"
+    )
     @NotNull(message = "A data deve ser informada.")
     private LocalDate data;
 

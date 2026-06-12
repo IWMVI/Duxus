@@ -4,6 +4,7 @@ import br.com.duxusdesafio.dto.IntegranteEntrada;
 import br.com.duxusdesafio.dto.IntegranteResposta;
 import br.com.duxusdesafio.dto.TimeEntrada;
 import br.com.duxusdesafio.dto.TimeResposta;
+import br.com.duxusdesafio.exception.ErroResposta;
 import br.com.duxusdesafio.service.CadastroService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -12,7 +13,12 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -39,7 +45,7 @@ public class CadastroController {
             @ApiResponse(
                     responseCode = "400",
                     description = "Dados do integrante inválidos",
-                    content = @Content(schema = @Schema(implementation = br.com.duxusdesafio.exception.ErroResposta.class))
+                    content = @Content(schema = @Schema(implementation = ErroResposta.class))
             )
     })
     public IntegranteResposta cadastrarIntegrante(@Valid @RequestBody IntegranteEntrada entrada) {
@@ -64,12 +70,12 @@ public class CadastroController {
             @ApiResponse(
                     responseCode = "400",
                     description = "Dados do time inválidos",
-                    content = @Content(schema = @Schema(implementation = br.com.duxusdesafio.exception.ErroResposta.class))
+                    content = @Content(schema = @Schema(implementation = ErroResposta.class))
             ),
             @ApiResponse(
                     responseCode = "404",
                     description = "Um ou mais integrantes não foram encontrados",
-                    content = @Content(schema = @Schema(implementation = br.com.duxusdesafio.exception.ErroResposta.class))
+                    content = @Content(schema = @Schema(implementation = ErroResposta.class))
             )
     })
     public TimeResposta cadastrarTime(@Valid @RequestBody TimeEntrada entrada) {
