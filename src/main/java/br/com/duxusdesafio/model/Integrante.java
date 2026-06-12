@@ -1,91 +1,98 @@
 package br.com.duxusdesafio.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Table(name = "integrante")
 public class Integrante {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
 
-	@NotBlank
-	@Column(nullable = false)
-	private String nome;
-	
-	@NotBlank
-	@Column(nullable = false)
-	private String funcao;
-	
-	@OneToMany(mappedBy = "integrante")
-	private List<ComposicaoTime> composicaoTime;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
+    @NotBlank
+    @Column(nullable = false)
+    private String nome;
 
-	public Integrante() {
-	}
+    @NotBlank
+    @Column(nullable = false)
+    private String funcao;
 
-	public Integrante(String nome, String funcao, List<ComposicaoTime> composicaoTime) {
-		this.nome = nome;
-		this.funcao = funcao;
-		this.composicaoTime = composicaoTime;
-	}
+    @OneToMany(mappedBy = "integrante")
+    private List<ComposicaoTime> composicaoTime;
 
-	public long getId() {
-		return id;
-	}
+    public Integrante() {
+    }
 
-	public void setId(long id) {
-		this.id = id;
-	}
+    public Integrante(String nome, String funcao, List<ComposicaoTime> composicaoTime) {
+        this.nome = nome;
+        this.funcao = funcao;
+        this.composicaoTime = composicaoTime;
+    }
 
-	public String getNome() {
-		return nome;
-	}
+    public long getId() {
+        return id;
+    }
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+    public void setId(long id) {
+        this.id = id;
+    }
 
-	public String getFuncao() {
-		return funcao;
-	}
+    public String getNome() {
+        return nome;
+    }
 
-	public void setFuncao(String funcao) {
-		this.funcao = funcao;
-	}
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
-	public List<ComposicaoTime> getComposicaoTime() {
-		return composicaoTime;
-	}
+    public String getFuncao() {
+        return funcao;
+    }
 
-	public void setComposicaoTime(List<ComposicaoTime> composicaoTime) {
-		this.composicaoTime = composicaoTime;
-	}
+    public void setFuncao(String funcao) {
+        this.funcao = funcao;
+    }
 
+    public List<ComposicaoTime> getComposicaoTime() {
+        return composicaoTime;
+    }
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (!(o instanceof Integrante)) return false;
-		Integrante that = (Integrante) o;
-		return id == that.id && Objects.equals(nome, that.nome) && Objects.equals(funcao, that.funcao);
-	}
+    public void setComposicaoTime(List<ComposicaoTime> composicaoTime) {
+        this.composicaoTime = composicaoTime;
+    }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(id, nome, funcao);
-	}
+    @Override
+    public final boolean equals(Object objeto) {
+        if (this == objeto) {
+            return true;
+        }
+        if (!(objeto instanceof Integrante)) {
+            return false;
+        }
+        Integrante outro = (Integrante) objeto;
+        return id != 0 && id == outro.id;
+    }
 
-	@Override
-	public String toString() {
-		return "Integrante{" +
-				"id=" + id +
-				", nome='" + nome + '\'' +
-				", funcao='" + funcao + '\'' +
-				'}';
-	}
+    @Override
+    public final int hashCode() {
+        return getClass().hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "Integrante{"
+                + "id=" + id
+                + ", nome='" + nome + '\''
+                + ", funcao='" + funcao + '\''
+                + '}';
+    }
 }
