@@ -29,9 +29,19 @@ jobs:
     name: Docker and SQL Server integration
     runs-on: ubuntu-latest
     needs: test
+    env:
+      MSSQL_SA_PASSWORD: ${{ secrets.MSSQL_SA_PASSWORD }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Validate SQL Server secret
+        shell: bash
+        run: |
+          if [ -z "$MSSQL_SA_PASSWORD" ]; then
+            echo "::error::Cadastre o secret MSSQL_SA_PASSWORD nas configurações do repositório."
+            exit 1
+          fi
 
       - name: Start stack
         run: docker compose up --build --detach
@@ -63,7 +73,9 @@ jobs:
 
       - name: Stop stack
         if: always()
-        run: docker compose down --volumes
+        run: |
+          export MSSQL_SA_PASSWORD="${MSSQL_SA_PASSWORD:-CleanupOnly!Aa1}"
+          docker compose down --volumes
 
   publish:
     name: Publish image
