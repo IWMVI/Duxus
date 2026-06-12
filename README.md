@@ -181,6 +181,7 @@ Pré-requisitos: Docker Engine e Docker Compose v2.
 
 ```bash
 cp .env.example .env
+# Preencha as senhas e usuários no .env antes de continuar
 docker compose up --build
 ```
 
@@ -214,20 +215,20 @@ docker run -d \
   --network desafio-dx \
   -e ACCEPT_EULA=Y \
   -e MSSQL_PID=Express \
-  -e MSSQL_SA_PASSWORD=Duxus@Sql2026 \
+  -e MSSQL_SA_PASSWORD="$MSSQL_SA_PASSWORD" \
   -v sqlserver-data:/var/opt/mssql \
   mcr.microsoft.com/mssql/server:2022-latest
 
 # Aguarda o SQL Server ficar saudável
 echo "Aguardando SQL Server..."
 until docker exec sqlserver /opt/mssql-tools18/bin/sqlcmd \
-  -C -S localhost -U sa -P "Duxus@Sql2026" -Q "SELECT 1" -b -o /dev/null 2>/dev/null; do
+  -C -S localhost -U sa -P "$MSSQL_SA_PASSWORD" -Q "SELECT 1" -b -o /dev/null 2>/dev/null; do
   sleep 2
 done
 
 # Cria o banco duxus
 docker exec sqlserver /opt/mssql-tools18/bin/sqlcmd \
-  -C -S localhost -U sa -P "Duxus@Sql2026" \
+  -C -S localhost -U sa -P "$MSSQL_SA_PASSWORD" \
   -Q "IF DB_ID(N'duxus') IS NULL CREATE DATABASE [duxus]"
 
 # Constrói a imagem da aplicação
@@ -240,9 +241,8 @@ docker run -d \
   -p 8080:8080 \
   -e SPRING_DATASOURCE_URL="jdbc:sqlserver://sqlserver:1433;databaseName=duxus;encrypt=true;trustServerCertificate=true" \
   -e SPRING_DATASOURCE_DRIVER_CLASS_NAME=com.microsoft.sqlserver.jdbc.SQLServerDriver \
-  -e SPRING_DATASOURCE_USERNAME=sa \
-  -e SPRING_DATASOURCE_PASSWORD=Duxus@Sql2026 \
-  -e SPRING_H2_CONSOLE_ENABLED=false \
+  -e SPRING_DATASOURCE_USERNAME="$SPRING_DATASOURCE_USERNAME" \
+  -e SPRING_DATASOURCE_PASSWORD="$SPRING_DATASOURCE_PASSWORD" \
   -e SPRING_JPA_HIBERNATE_DDL_AUTO=update \
   desafio-dx-app
 
@@ -253,15 +253,27 @@ docker network rm desafio-dx
 docker volume rm sqlserver-data
 ```
 
-### Execução local com H2
+### Execução local com SQL Server
 
-Pré-requisito: Java 8 ou superior.
+Pré-requisitos: Java 8 ou superior, Docker Engine e Docker Compose v2.
 
 ```bash
+docker compose up -d sqlserver sqlserver-init
 ./mvnw spring-boot:run
 ```
 
-Sem variáveis de ambiente, a aplicação usa H2 em memória.
+Por padrão, a aplicação acessa o banco `duxus` em
+`jdbc:sqlserver://localhost:1433`. As credenciais devem ser definidas somente
+no arquivo local `.env` ou nas variáveis de ambiente
+`SPRING_DATASOURCE_URL`, `SPRING_DATASOURCE_USERNAME` e
+`SPRING_DATASOURCE_PASSWORD`.
+O `.env` é carregado automaticamente na execução local e não é versionado.
+
+Antes de inicializar o JPA, a aplicação conecta ao catálogo `master` e cria o
+banco indicado por `databaseName` caso ele ainda não exista. O usuário
+configurado precisa ter permissão `CREATE ANY DATABASE`.
+
+O H2 é carregado somente durante os testes automatizados, pelo perfil `test`.
 
 ### Documentação da API
 
